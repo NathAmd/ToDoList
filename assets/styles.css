@@ -1,0 +1,47 @@
+header {
+  width: 100vw;
+}
+header h1 {
+  width: 100%;
+  text-align: center;
+}
+
+body {
+  background-image: url("background.png");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+body main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+body main .postIt {
+  background-color: yellow;
+  background-image: url("PostItTexture.jpg");
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  width: 30vw;
+  min-width: 250px;
+  min-height: 20vh;
+}
+body main .postIt #inputTask {
+  opacity: 75%;
+}
+body main .postIt #buttonTask {
+  opacity: 75%;
+}
+body main .postIt li {
+  font-size: clamp(20px, 1.5vw, 999px);
+}
+body main .postIt li button {
+  border-radius: 100%;
+  margin-right: 2vw;
+  opacity: 75%;
+  background-color: red;
+}/*# sourceMappingURL=styles.css.map */
