@@ -1,16 +1,23 @@
+import {Get,Set} from "./LocalStorage.js";
+
 let grp = [];
 
 let buttonAdd = (e) => {
     let t = document.getElementById("inputTask");
-    grp = Get("todolist", []);
-    grp.push({ text: t.value, check: false });
-    Set("todolist", grp);
-    refresh();
+    let d = document.getElementById("Date");
+    if (t.value != null && d.value != null && t.value != "" && d.value != "") {
+        grp = Get("todolist", []);
+        grp.push({ text: t.value, value: "0", date: d.value });
+        t.value = "";
+        Set("todolist", grp);
+        refresh();
+    }
 }
 
 let CheckIn = (e) => {
     grp = Get("todolist", []);
-    grp[e.target.id].check = !grp[e.target.id].check;
+    console.log(e.target.value, grp[e.target.id])
+    grp[e.target.id].value = e.target.value;
     Set("todolist", grp);
     refresh();
 }
@@ -30,49 +37,65 @@ function refresh() {
 
     let i = 0;
     for (const x of grp) {
-        AddElements(x.text, x.check, i);
+        AddElements(x, i);
         i++;
     }
+
+    //document.documentElement.style.setProperty('--ma-couleur', 'rgb(' + parseInt(Math.random() * 255) + ',0,0)');
 }
 
-function AddElements(text, check, id) {
+function AddElements(Items, id) {
     let list = document.getElementById("ToDoList");
 
-    let li = document.createElement("li")
+    let _tr = document.createElement("tr");
+    let _th = document.createElement("th");
+    _th.scope = "row";
+    let td1 = document.createElement("td");
+    let td2 = document.createElement("td");
+    let td3 = document.createElement("td");
+
+    let slt = document.createElement("select");
+    let op1 = document.createElement("option");
+    let op2 = document.createElement("option");
+    let op3 = document.createElement("option");
+    slt.appendChild(op1);
+    slt.appendChild(op2);
+    slt.appendChild(op3);
+    op1.textContent = "Waiting";
+    op2.textContent = "Work in progress";
+    op3.textContent = "Done";
+    op1.value = "0";
+    op2.value = "1";
+    op3.value = "2";
+    slt.addEventListener('change', CheckIn)
+    slt.value = Items.value;
+    slt.id = id;
+
+    _tr.style = Items.value == "1" ? "background: rgb(255,255,0,0.3)" : Items.value == "2" ? "background: rgb(0,255,0,0.3)" : "background: none"
+
+
     let btn = document.createElement("button")
-    let txt = document.createElement("span")
+
 
     btn.textContent = "X";
     btn.id = id;
     btn.addEventListener('click', RemoveItem);
 
-    txt.textContent = text;
+    _th.textContent = Items.date;
+    td1.textContent = Items.text;
 
-    txt.id = id;
-    txt.style = check ? "text-decoration:line-through red;" : "text-decoration: none;";
-    txt.addEventListener('click', CheckIn);
 
-    li.appendChild(btn);
-    li.appendChild(txt);
+    td3.appendChild(btn);
+    td2.appendChild(slt);
 
-    list.appendChild(li);
+    _tr.appendChild(_th);
+    _tr.appendChild(td1);
+    _tr.appendChild(td2);
+    _tr.appendChild(td3);
+    list.appendChild(_tr);
 }
 
-function Get(name, ini) {
-    let data = localStorage.getItem(name);
 
-    if (data !== null) {
-        return JSON.parse(data);
-    } else {
-        localStorage.setItem(name, JSON.stringify(ini));
-        return JSON.parse(localStorage.getItem(name));
-    }
-}
-
-function Set(name, value) {
-    localStorage.setItem(name, JSON.stringify(value));
-    return JSON.parse(localStorage.getItem(name));
-}
 
 
 let btn = document.getElementById("buttonTask");

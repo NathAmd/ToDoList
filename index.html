@@ -13,16 +13,28 @@
     <main>
         <section class="postIt">
             
-            <input type="text" name="task" id="inputTask" /><button type="submit" id="buttonTask">Add to list</button>
+            <input type="text" name="task" id="inputTask">
+            <input type="date" name="Date" id="Date">
+            <button type="submit" id="buttonTask">Add to list</button>
 
-            <ul id="ToDoList">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">date</th>
+                    <th scope="col">task</th>
+                    <th scope="col">status</th>
+                </tr>
+            </thead>
+            <tbody id="ToDoList">
+            </tbody>
+        </table>
 
-            </ul>
         </section>
     </main>
     <footer>
 
     </footer>
 </body>
-    <script defer src="assets/script.js"></script>
+    <script defer type="module" src="assets/script.js"></script>
+    <script type="module" src="assets/LocalStorage.js"></script>
 </html>
